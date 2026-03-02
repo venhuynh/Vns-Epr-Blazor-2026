@@ -1,0 +1,35 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build Solution
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Setup DevExpress NuGet Feed
+      run: |
+        dotnet nuget add source "https://nuget.devexpress.com/api" --name "DevExpress" --username "DevExpress" --password "${{ secrets.DEVEXPRESS_NUGET_KEY }}" --store-password-in-clear-text
+      shell: bash
+
+    - name: Restore dependencies
+      run: dotnet restore Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.sln
+
+    - name: Build Web project
+      run: dotnet build Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.Web/Vns-Epr-Blazor-2026.Web.csproj --configuration Release --no-restore
+
+    # - name: Run tests
+    #   run: dotnet test --configuration Release --no-build --verbosity normal
