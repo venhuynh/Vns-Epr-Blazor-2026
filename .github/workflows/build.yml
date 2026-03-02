@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build Solution
-    runs-on: windows-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout
@@ -22,7 +22,7 @@ jobs:
 
     - name: Setup DevExpress NuGet Feed
       run: |
-        dotnet nuget add source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/v3/index.json" --name "DevExpress"
+        dotnet nuget add source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/v3/index.json" --name "DevExpress" 2>/dev/null || true
       shell: bash
 
     - name: Restore dependencies

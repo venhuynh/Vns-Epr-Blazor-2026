@@ -1,0 +1,19 @@
+services:
+  github-runner:
+    build:
+      context: .github/runner
+      dockerfile: Dockerfile.runner
+    container_name: vns-erp-runner
+    restart: unless-stopped
+    env_file:
+      - .github/runner/.env
+    environment:
+      - GITHUB_REPOSITORY=venhuynh/Vns-Epr-Blazor-2026
+      - RUNNER_NAME=vns-erp-docker-runner
+      - RUNNER_LABELS=self-hosted,linux,x64,docker
+    volumes:
+      - runner-work:/home/runner/actions-runner/_work
+
+volumes:
+  runner-work:
+    name: vns-erp-runner-work

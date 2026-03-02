@@ -1,0 +1,52 @@
+FROM ubuntu:22.04
+
+ARG RUNNER_VERSION=2.322.0
+ARG DOTNET_VERSION=10.0
+
+# Prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    wget \
+    git \
+    jq \
+    ca-certificates \
+    apt-transport-https \
+    software-properties-common \
+    libicu70 \
+    libssl3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install .NET 10 SDK
+RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
+    && chmod +x dotnet-install.sh \
+    && ./dotnet-install.sh --channel ${DOTNET_VERSION} --install-dir /usr/share/dotnet \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    && rm dotnet-install.sh
+
+ENV DOTNET_ROOT=/usr/share/dotnet
+ENV PATH="${PATH}:/usr/share/dotnet"
+
+# Create runner user
+RUN useradd -m runner && \
+    mkdir -p /home/runner/actions-runner && \
+    chown -R runner:runner /home/runner
+
+# Download and install GitHub Actions Runner
+WORKDIR /home/runner/actions-runner
+RUN curl -o actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz -L \
+    https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
+    && tar xzf actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
+    && rm actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
+    && ./bin/installdependencies.sh \
+    && chown -R runner:runner /home/runner/actions-runner
+
+# Copy entrypoint script
+COPY start.sh /home/runner/start.sh
+RUN chmod +x /home/runner/start.sh
+
+USER runner
+
+ENTRYPOINT ["/home/runner/start.sh"]
