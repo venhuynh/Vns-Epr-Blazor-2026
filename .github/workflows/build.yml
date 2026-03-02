@@ -22,7 +22,7 @@ jobs:
 
     - name: Setup DevExpress NuGet Feed
       run: |
-        dotnet nuget add source "https://nuget.devexpress.com/api" --name "DevExpress" --username "DevExpress" --password "${{ secrets.DEVEXPRESS_NUGET_KEY }}" --store-password-in-clear-text
+        dotnet nuget add source "https://nuget.devexpress.com/${{ secrets.DEVEXPRESS_NUGET_KEY }}/api/v3/index.json" --name "DevExpress"
       shell: bash
 
     - name: Restore dependencies
