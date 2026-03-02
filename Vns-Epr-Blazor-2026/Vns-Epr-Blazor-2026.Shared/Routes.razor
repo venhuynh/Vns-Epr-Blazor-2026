@@ -1,15 +1,11 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
-
-<CascadingAuthenticationState>
-    <Router AppAssembly="typeof(Layout.MainLayout).Assembly">
-        <Found Context="routeData">
-            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
-                <NotAuthorized>
-                    @* Redirect to login page when not authorized *@
-                    <RedirectToLogin />
-                </NotAuthorized>
-            </AuthorizeRouteView>
-            <FocusOnNavigate RouteData="routeData" Selector="h1" />
-        </Found>
-    </Router>
-</CascadingAuthenticationState>
+﻿<Router AppAssembly="typeof(Layout.MainLayout).Assembly"
+        AdditionalAssemblies="new[] { typeof(Vns_Epr_Blazor_2026.Web.Client._Imports).Assembly }">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+            <NotAuthorized>
+                <p>Đang chuyển hướng đến trang đăng nhập...</p>
+            </NotAuthorized>
+        </AuthorizeRouteView>
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+</Router>

@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ViewFeatures
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="utf-8" />
@@ -14,16 +14,27 @@
     <link href="@Assets["Vns-Epr-Blazor-2026.Web.styles.css"]" rel="stylesheet" />
     <link href="@Assets["_content/Vns-Epr-Blazor-2026.Shared/favicon.png"]" rel="icon" type="image/png" />
     <ImportMap />
-    <HeadOutlet @rendermode="InteractiveAuto" />
+    <HeadOutlet @rendermode="RenderModeForPage" />
 </head>
 
 <body>
-    <Routes @rendermode="InteractiveAuto" />
+    <Routes @rendermode="RenderModeForPage" />
     <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 
 </html>
 
 @code {
+    [CascadingParameter]
+    HttpContext HttpContext { get; set; } = default!;
 
+    /// <summary>
+    /// Account pages (Login, Logout, etc.) render STATICALLY so they can access HttpContext.
+    /// All other pages use InteractiveAuto.
+    /// Ref: DevExpress BlazorDemo.Showcase App.razor line 59
+    /// </summary>
+    IComponentRenderMode? RenderModeForPage =>
+        HttpContext.Request.Path.StartsWithSegments("/Account")
+            ? null
+            : new InteractiveAutoRenderMode(false);
 }
