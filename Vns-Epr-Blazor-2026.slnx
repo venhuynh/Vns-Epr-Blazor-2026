@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.Shared/Vns-Epr-Blazor-2026.Shared.csproj" />
+  <Project Path="Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.Web.Client/Vns-Epr-Blazor-2026.Web.Client.csproj" />
+  <Project Path="Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.Web/Vns-Epr-Blazor-2026.Web.csproj" />
+  <Project Path="Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.csproj" />
+</Solution>

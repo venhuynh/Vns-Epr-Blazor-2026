@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Mvc.ViewFeatures
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    @DxResourceManager.RegisterScripts()
+    @DxResourceManager.RegisterTheme(Themes.Fluent)
+    <link href="@Assets["_content/Vns-Epr-Blazor-2026.Shared/bootstrap/bootstrap.min.css"]" rel="stylesheet" />
+    <link href="@Assets["_content/Vns-Epr-Blazor-2026.Shared/app.css"]" rel="stylesheet" />
+    <link href="@Assets["Vns-Epr-Blazor-2026.Web.styles.css"]" rel="stylesheet" />
+    <link href="@Assets["_content/Vns-Epr-Blazor-2026.Shared/favicon.png"]" rel="icon" type="image/png" />
+    <ImportMap />
+    <HeadOutlet @rendermode="InteractiveAuto" />
+</head>
+
+<body>
+    <Routes @rendermode="InteractiveAuto" />
+    <script src="@Assets["_framework/blazor.web.js"]"></script>
+</body>
+
+</html>
+
+@code {
+
+}

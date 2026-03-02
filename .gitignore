@@ -1,0 +1,86 @@
+## .NET / Visual Studio
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+build/
+Build/
+
+# NuGet
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nupkg
+**/packages/*
+!**/packages/build/
+*.snupkg
+.nuget/
+*.nuget.props
+*.nuget.targets
+
+# MSBuild
+*.build.log
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# User-specific files
+*.user
+*.dbmdl
+*.jfm
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# dotnet tool
+.dotnet/
+
+# Project-specific
+launchSettings.json
+!**/Properties/launchSettings.json
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResult.xml
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.DS_Store
+
+# DevExpress Model Editor
+*.xafml.user
+
+# Publish output
+publish/
+
+# Application data files (EasyTest logs, ModelAssembly, etc.)
+ModelAssembly/
+**/Model.Cache.xafml
