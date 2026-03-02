@@ -1,5 +1,6 @@
 @page "/Account/Login"
 @layout Vns_Epr_Blazor_2026.Web.Components.Account.Shared.AccountLayout
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
@@ -24,27 +25,27 @@
 
     <EditForm Model="@Input" method="post" OnValidSubmit="LoginUser" FormName="login" Context="LoginContext">
         <DataAnnotationsValidator />
-        <DxFormLayout CaptionPosition="CaptionPosition.Vertical">
-            <DxFormLayoutItem Caption="📧 Email" ColSpanMd="12" BeginRow="true">
-                <DxTextBox @bind-Value="Input.Email" NullText="Nhập email..."
-                           CssClass="form-input" />
-                <ValidationMessage class="text-danger" For="() => Input.Email" />
-            </DxFormLayoutItem>
-            <DxFormLayoutItem Caption="🔒 Mật khẩu" ColSpanMd="12" BeginRow="true">
-                <DxTextBox @bind-Value="Input.Password" Password="true"
-                           NullText="Nhập mật khẩu..." CssClass="form-input" />
-                <ValidationMessage class="text-danger" For="() => Input.Password" />
-            </DxFormLayoutItem>
-            <DxFormLayoutItem ColSpanMd="12" BeginRow="true">
-                <DxCheckBox @bind-Checked="Input.RememberMe" CssClass="remember-check">
-                    Ghi nhớ đăng nhập
-                </DxCheckBox>
-            </DxFormLayoutItem>
-            <DxFormLayoutItem ColSpanMd="12" BeginRow="true">
-                <DxButton CssClass="btn-login w-100" SubmitFormOnClick="true" Text="Đăng nhập"
-                          RenderStyle="ButtonRenderStyle.Primary" />
-            </DxFormLayoutItem>
-        </DxFormLayout>
+
+        <div class="form-group mb-3">
+            <label for="email" class="form-label">📧 Email</label>
+            <InputText @bind-Value="Input.Email" id="email" class="form-control form-control-lg"
+                       placeholder="Nhập email..." />
+            <ValidationMessage class="text-danger" For="() => Input.Email" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="password" class="form-label">🔒 Mật khẩu</label>
+            <InputText @bind-Value="Input.Password" id="password" type="password"
+                       class="form-control form-control-lg" placeholder="Nhập mật khẩu..." />
+            <ValidationMessage class="text-danger" For="() => Input.Password" />
+        </div>
+
+        <div class="form-check mb-3">
+            <InputCheckbox @bind-Value="Input.RememberMe" id="rememberMe" class="form-check-input" />
+            <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-login w-100">Đăng nhập</button>
     </EditForm>
 
     <div class="copyright">
