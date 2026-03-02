@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../Vns-Erp-xaf-2026"
+		},
+		{
+			"path": "../../../../../Public/Documents/DevExpress Demos 25.2/Components/Blazor/BlazorDemo.Showcase"
 		}
 	],
 	"settings": {}

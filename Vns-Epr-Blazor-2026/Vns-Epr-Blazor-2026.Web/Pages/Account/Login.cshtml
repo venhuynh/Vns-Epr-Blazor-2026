@@ -1,0 +1,123 @@
+@page
+@model Vns_Epr_Blazor_2026.Web.Pages.Account.LoginModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Đăng nhập — VNS ERP";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="/_content/Vns-Epr-Blazor-2026.Shared/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            backdrop-filter: blur(10px);
+        }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin: 0;
+        }
+        .login-logo p {
+            color: #6c757d;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+        .form-floating {
+            margin-bottom: 16px;
+        }
+        .form-control:focus {
+            border-color: #2a5298;
+            box-shadow: 0 0 0 0.2rem rgba(42, 82, 152, 0.25);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            width: 100%;
+            color: white;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(42, 82, 152, 0.4);
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+        }
+        .alert-danger {
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .form-check-label { font-size: 14px; color: #6c757d; }
+        .copyright { text-align: center; margin-top: 24px; font-size: 12px; color: #adb5bd; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <h1>🏢 VNS ERP</h1>
+            <p>Enterprise Resource Planning</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                <i>⚠️</i> @Model.ErrorMessage
+            </div>
+        }
+
+        <form method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" name="Input.Email"
+                       placeholder="Email" value="@Model.Input.Email" required autofocus />
+                <label for="email">📧 Email</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="Input.Password"
+                       placeholder="Mật khẩu" required />
+                <label for="password">🔒 Mật khẩu</label>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="Input.RememberMe"
+                       id="rememberMe" value="true" />
+                <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+            </div>
+
+            <button type="submit" class="btn btn-login">Đăng nhập</button>
+        </form>
+
+        <div class="copyright">
+            &copy; @DateTime.Now.Year VNS ERP 2026. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

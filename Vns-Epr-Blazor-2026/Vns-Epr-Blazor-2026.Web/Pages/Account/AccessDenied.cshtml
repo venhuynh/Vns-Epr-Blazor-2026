@@ -1,0 +1,54 @@
+@page
+@{
+    Layout = null;
+    ViewData["Title"] = "Truy cập bị từ chối";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="/_content/Vns-Epr-Blazor-2026.Shared/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .denied-container {
+            text-align: center;
+            padding: 60px 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 480px;
+        }
+        .denied-icon { font-size: 64px; margin-bottom: 16px; }
+        .denied-container h2 { color: #dc3545; font-weight: 700; }
+        .denied-container p { color: #6c757d; margin: 16px 0; }
+        .btn-back {
+            background: #1e3c72;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 16px;
+        }
+        .btn-back:hover { background: #2a5298; color: white; }
+    </style>
+</head>
+<body>
+    <div class="denied-container">
+        <div class="denied-icon">🚫</div>
+        <h2>Truy cập bị từ chối</h2>
+        <p>Bạn không có quyền truy cập trang này.<br/>Vui lòng liên hệ quản trị viên để được cấp quyền.</p>
+        <a href="/" class="btn-back">← Về trang chủ</a>
+    </div>
+</body>
+</html>
