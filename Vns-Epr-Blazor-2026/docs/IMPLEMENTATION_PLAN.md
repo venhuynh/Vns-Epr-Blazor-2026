@@ -24,9 +24,10 @@ We are migrating from a Monolith architecture to a Clean Architecture multi-proj
 - [x] 2.4. Finalize Blazor Identity UI and ensure AuthenticationStateProvider is fully functional. — Verified CascadingAuthenticationState + AuthorizeRouteView already configured; updated NavMenu with RBAC-segmented menus (Home, Dashboard for all; User Management for Admin+; System Settings for SuperAdmin); replaced DevExpress footer with VNS ERP branding. Build: 0 errors, 0 warnings.
 
 ### Phase 3 — Master Data Module (Pending)
-- [ ] 3.1. Build Domain entities for Master Data (e.g., Warehouse, UnitOfMeasure, ItemCategory, Product).
-- [ ] 3.2. Create Application layer MediatR Commands/Queries and DTOs for Master Data.
-- [ ] 3.3. Implement EF Core Configurations and build DevExpress CRUD UIs for Master Data.
+- [x] 3.1. Build Domain entities for Master Data. — Translated 18 legacy XPO classes into 16 pure C# entities + 3 enums in `Vns.Erp.Domain/MasterData/` (Company, CompanyBranch, Department, Employee, Position, BusinessPartner, BusinessPartnerCategory, BusinessPartnerContact, BusinessPartnerSite, ProductService, ProductServiceCategory, UnitOfMeasure, ProductAttribute, ProductAttributeValue, ProductVariant, VariantAttributeLink). Build: 0 errors.
+- [/] 3.2. Create Application layer MediatR Commands/Queries, DTOs, and Mapping Profiles. — Implemented initial CQRS patterns for Company and UnitOfMeasure (DTOs, AutoMapper profile, List queries, Create/Update commands with handlers). Added MediatR + AutoMapper packages. Extended `IApplicationDbContext` and `ApplicationDbContext` with all 16 Master Data DbSets. Full solution build: 0 errors.
+- [ ] 3.3. Implement EF Core Configurations in the Infrastructure layer based on the relationships defined in the XAF project.
+- [ ] 3.4. Build DevExpress CRUD UIs (DxGrid) for Master Data management.
 
 ### Phase 4 — Inventory Module (Pending)
 - [ ] 4.1. Build Domain entities (StockInOutMaster, StockInOutDetail, InventoryBalance) linked to Master Data. *(Early domain entities already created in `Vns.Erp.Domain/Inventory/`)*
@@ -37,6 +38,8 @@ We are migrating from a Monolith architecture to a Clean Architecture multi-proj
 - [x] 1.11. Fixed Identity routing and sign-in by forcing Static SSR on Shared Account components.
 
 > **Note:** Updated roadmap to Identity → Master Data → Inventory per Solution Architect review (2026-03-03).
+
+> **Note:** Committed Phase 2 and checked out branch: `feature/phase3-master-data` (2026-03-03).
 
 ## AI Agent Instructions
 Before starting a new prompt, read this file to understand the current progress. When a sub-task is successfully completed and verified, check the box [x] and write a brief 1-sentence summary of the implementation here.

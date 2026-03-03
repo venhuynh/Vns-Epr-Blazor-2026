@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Vns.Erp.Application;
@@ -10,8 +11,13 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        // Register Application layer services here
-        // e.g., MediatR handlers, AutoMapper profiles, FluentValidation validators
+        var assembly = Assembly.GetExecutingAssembly();
+
+        // MediatR — auto-discovers all IRequestHandler implementations
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+
+        // AutoMapper — auto-discovers all Profile classes
+        services.AddAutoMapper(assembly);
 
         return services;
     }

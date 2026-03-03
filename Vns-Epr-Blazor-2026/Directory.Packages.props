@@ -22,6 +22,10 @@
     <!-- PostgreSQL -->
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
 
+    <!-- Application Layer (CQRS + Mapping) -->
+    <PackageVersion Include="MediatR" Version="12.*" />
+    <PackageVersion Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.*" />
+
     <!-- Testing -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.*" />
     <PackageVersion Include="xunit" Version="2.*" />
