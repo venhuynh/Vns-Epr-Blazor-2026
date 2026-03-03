@@ -2,6 +2,7 @@
 @implements IDisposable
 
 <div>
+    @* --- Mobile Auth Menu (User profile / Log in) --- *@
     <DxMenu Orientation="@Orientation.Vertical" CssClass="menu display-mobile">
         <Items>
             <AuthorizeView>
@@ -15,12 +16,41 @@
             </AuthorizeView>
         </Items>
     </DxMenu>
+
+    @* --- Main Navigation (visible to all authenticated users) --- *@
     <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
         <Items>
             <DxMenuItem NavigateUrl="/" Text="Home" CssClass="@MenuItemCssClass("/")" IconCssClass="icon icon-home"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/counter" Text="Counter" CssClass="@MenuItemCssClass("/counter")" IconCssClass="icon icon-counter"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/weather" Text="Weather" CssClass="@MenuItemCssClass("/weather")" IconCssClass="icon icon-weather"></DxMenuItem>
-            <DxMenuItem NavigateUrl="Account/Manage" Text="Settings" CssClass="@MenuItemCssClass("/Account/Manage")" IconCssClass="icon icon-settings"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/dashboard" Text="Dashboard" CssClass="@MenuItemCssClass("/dashboard")" IconCssClass="icon icon-counter"></DxMenuItem>
+        </Items>
+    </DxMenu>
+
+    @* --- Admin Navigation (SuperAdmin + Admin only) --- *@
+    <AuthorizeView Roles="SuperAdmin, Admin">
+        <Authorized>
+            <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
+                <Items>
+                    <DxMenuItem NavigateUrl="/admin/users" Text="User Management" CssClass="@MenuItemCssClass("/admin/users")" IconCssClass="icon icon-user"></DxMenuItem>
+                </Items>
+            </DxMenu>
+        </Authorized>
+    </AuthorizeView>
+
+    @* --- SuperAdmin-only Navigation --- *@
+    <AuthorizeView Roles="SuperAdmin">
+        <Authorized>
+            <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
+                <Items>
+                    <DxMenuItem NavigateUrl="/admin/settings" Text="System Settings" CssClass="@MenuItemCssClass("/admin/settings")" IconCssClass="icon icon-settings"></DxMenuItem>
+                </Items>
+            </DxMenu>
+        </Authorized>
+    </AuthorizeView>
+
+    @* --- Account Settings (all authenticated) --- *@
+    <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
+        <Items>
+            <DxMenuItem NavigateUrl="Account/Manage" Text="My Account" CssClass="@MenuItemCssClass("/Account/Manage")" IconCssClass="icon icon-settings"></DxMenuItem>
         </Items>
     </DxMenu>
 </div>

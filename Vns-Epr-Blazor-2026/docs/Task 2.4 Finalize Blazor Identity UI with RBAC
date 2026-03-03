@@ -1,0 +1,48 @@
+# Task 2.4: Finalize Blazor Identity UI with RBAC
+
+Connect the backend Identity/RBAC infrastructure (completed in Tasks 2.1–2.3) to the Blazor frontend so components react to authentication state and role claims.
+
+## Findings (Current State)
+
+The backend is **already well-configured**:
+- [Program.cs](file:///c:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Program.cs) calls `AddCascadingAuthenticationState()`, `AddRoles<ApplicationRole>()`, and registers `IdentityRevalidatingAuthenticationStateProvider`.
+- [Routes.razor](file:///c:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Components/Routes.razor) uses `<AuthorizeRouteView>` with a `<RedirectToLogin />` fallback — no changes needed.
+- [MainLayout.razor](file:///c:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Components/Layout/MainLayout.razor) already shows user name + Logout button via `<AuthorizeView>` in the top toolbar.
+- [NavMenu.razor](file:///c:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Components/Layout/NavMenu.razor) has `<AuthorizeView>` for the mobile menu (user name / Log out / Log in) but the **main desktop menu** (Home, Counter, Weather, Settings) is **not** wrapped with any auth or role checks.
+
+## Proposed Changes
+
+### Navigation & Layout
+
+#### [MODIFY] [NavMenu.razor](file:///c:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Components/Layout/NavMenu.razor)
+
+Replace the static main `<DxMenu>` block with role-aware menu items:
+
+| Menu Item | Visibility | Icon |
+|---|---|---|
+| Home | All authenticated users | `icon-home` |
+| Dashboard | All authenticated users | `icon-counter` *(reuse existing)* |
+| User Management | `SuperAdmin, Admin` only | `icon-settings` |
+| System Settings | `SuperAdmin` only | `icon-settings` |
+
+**Implementation approach:** Wrap restricted items using `<AuthorizeView Roles="...">`. Since `<DxMenu>` → `<Items>` only accepts `<DxMenuItem>`, we cannot nest `<AuthorizeView>` directly inside `<Items>`. Instead, we will use **two separate `<DxMenu>`** blocks:
+1. A menu for items visible to all authenticated users (Home, Dashboard).
+2. A menu wrapped in `<AuthorizeView Roles="SuperAdmin, Admin">` for admin-only items (User Management, System Settings), with the `SuperAdmin`-only item nested using a second `<AuthorizeView>`.
+
+#### [MODIFY] [MainLayout.razor](file:///c:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Components/Layout/MainLayout.razor)
+
+- Replace the drawer footer (currently linking to DevExpress Docs/Demos) with VNS ERP branding, e.g. **"VNS ERP 2026"** label and a copyright year.
+- The existing `<AuthorizeView>` for user name + Logout is already correct — no changes needed there.
+
+## Verification Plan
+
+### Automated Tests
+- **Build verification**: `dotnet build Vns-Epr-Blazor-2026.slnx` — must produce 0 errors.
+- **Unit tests**: `dotnet test Vns.Erp.Tests.Unit/Vns.Erp.Tests.Unit.csproj` — existing tests must still pass.
+
+### Manual Browser Verification
+1. Run the app with `dotnet run --project Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.csproj`.
+2. Navigate to the login page. Log in as `admin@vns.com.vn` / `Admin@2026!`.
+3. Verify: All menu items (Home, Dashboard, User Management, System Settings) are visible because this user has `SuperAdmin` role.
+4. Verify: User name ("admin@vns.com.vn") and Logout button are displayed in the top toolbar.
+5. Verify: The drawer footer shows VNS ERP branding instead of DevExpress links.

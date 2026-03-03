@@ -1,5 +1,8 @@
 ﻿
-<DxCheckBox name="@Name" InputId="@InputId" @bind-Checked="Value">@LabelText</DxCheckBox>
+<div class="checkbox-container">
+    <input type="checkbox" name="@Name" id="@InputId" checked="@Value" value="true" />
+    <label for="@InputId">@LabelText</label>
+</div>
 
 @code {
     [Parameter] public bool Value { get; set; }

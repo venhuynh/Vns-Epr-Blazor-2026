@@ -21,7 +21,7 @@ We are migrating from a Monolith architecture to a Clean Architecture multi-proj
 - [x] 2.1. Define ApplicationRole and extend ApplicationUser (if needed) in Domain.
 - [x] 2.2. Configure Role-Based Access Control (RBAC) and Claims in Infrastructure.
 - [x] 2.3. Create DbSeeders for default Admin user and base roles (e.g., SuperAdmin, WarehouseManager).
-- [ ] 2.4. Finalize Blazor Identity UI and ensure AuthenticationStateProvider is fully functional.
+- [x] 2.4. Finalize Blazor Identity UI and ensure AuthenticationStateProvider is fully functional. — Verified CascadingAuthenticationState + AuthorizeRouteView already configured; updated NavMenu with RBAC-segmented menus (Home, Dashboard for all; User Management for Admin+; System Settings for SuperAdmin); replaced DevExpress footer with VNS ERP branding. Build: 0 errors, 0 warnings.
 
 ### Phase 3 — Master Data Module (Pending)
 - [ ] 3.1. Build Domain entities for Master Data (e.g., Warehouse, UnitOfMeasure, ItemCategory, Product).
