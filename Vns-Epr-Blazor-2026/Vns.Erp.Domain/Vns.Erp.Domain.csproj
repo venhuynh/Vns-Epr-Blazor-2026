@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Vns.Erp.Domain</RootNamespace>
+    <AssemblyName>Vns.Erp.Domain</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Only the abstractions needed for ApplicationUser : IdentityUser -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+  </ItemGroup>
+</Project>

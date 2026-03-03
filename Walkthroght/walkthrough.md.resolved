@@ -1,0 +1,112 @@
+# Phase 1 - Scaffolding Walkthrough
+
+## Tổng Quan
+
+Đã hoàn thành chuyển đổi dự án từ **single-project monolith** sang **Clean Architecture 6-project** structure với **PostgreSQL** trên **Docker Desktop**. Build thành công với **0 errors**.
+
+## Files Đã Tạo Mới
+
+### Foundation Files (Solution Root)
+| File | Mục đích |
+|---|---|
+| [Directory.Build.props](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Directory.Build.props) | Shared build properties: .NET 10, nullable, implicit usings |
+| [Directory.Packages.props](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Directory.Packages.props) | Central Package Management với floating versions enabled |
+| [global.json](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/global.json) | SDK pinning (.NET 10 Preview) |
+| [.editorconfig](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/.editorconfig) | Code style conventions |
+| [nuget.config](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/nuget.config) | DevExpress authenticated feed + source mapping |
+
+### 🏛️ Vns.Erp.Domain (Pure C#)
+| File | Mục đích |
+|---|---|
+| [BaseEntity.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Domain/Common/BaseEntity.cs) | Base entity: Id, CreatedDate, ModifiedDate |
+| [AuditableEntity.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Domain/Common/AuditableEntity.cs) | Extends BaseEntity: CreatedBy, ModifiedBy |
+| [ISoftDeletable.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Domain/Common/ISoftDeletable.cs) | Soft delete interface |
+| [ApplicationUser.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Domain/Identity/ApplicationUser.cs) | Identity user with profile fields |
+
+### ⚙️ Vns.Erp.Application (Interfaces & DTOs)
+| File | Mục đích |
+|---|---|
+| [IApplicationDbContext.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Application/Common/Interfaces/IApplicationDbContext.cs) | DbContext abstraction |
+| [ICurrentUserService.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Application/Common/Interfaces/ICurrentUserService.cs) | User context service |
+| [IDateTimeService.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Application/Common/Interfaces/IDateTimeService.cs) | Testable time provider |
+| [DependencyInjection.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Application/DependencyInjection.cs) | [AddApplication()](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Application/DependencyInjection.cs#11-18) DI extension |
+
+### 🔧 Vns.Erp.Infrastructure (EF Core, Services)
+| File | Mục đích |
+|---|---|
+| [ApplicationDbContext.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/Persistence/ApplicationDbContext.cs) | EF Core context with auto-configuration discovery |
+| [OpenAIServiceSettings.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/ExternalServices/OpenAI/OpenAIServiceSettings.cs) | OpenAI config binding |
+| [DateTimeService.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/Services/DateTimeService.cs) | IDateTimeService impl |
+| [DependencyInjection.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/DependencyInjection.cs) | [AddInfrastructure()](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/DependencyInjection.cs#16-33) DI extension |
+
+### 🧩 Vns.Erp.Blazor.Shared (Component Library)
+| File | Mục đích |
+|---|---|
+| [DrawerStateComponentBase.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Blazor.Shared/Components/Common/DrawerStateComponentBase.cs) | Drawer state management |
+| [Drawer.razor](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Blazor.Shared/Components/Layout/Drawer.razor) | Shared drawer component |
+| [_Imports.razor](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Blazor.Shared/_Imports.razor) | Global usings |
+
+### 🧪 Vns.Erp.Tests.Unit
+| File | Mục đích |
+|---|---|
+| [SampleTest.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Tests.Unit/Domain/SampleTest.cs) | Placeholder test |
+
+## Files Đã Sửa
+
+| File | Thay đổi |
+|---|---|
+| [Vns-Epr-Blazor-2026.csproj](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.csproj) | Added 4 project references, removed version numbers (CPM) |
+| [Vns-Epr-Blazor-2026.slnx](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.slnx) | All 6 projects with logical solution folders |
+| [Program.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Program.cs) | Added [AddApplication()](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Application/DependencyInjection.cs#11-18) + [AddInfrastructure()](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/DependencyInjection.cs#16-33) DI calls |
+| [Data/ApplicationUser.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Data/ApplicationUser.cs) | Global using alias → Domain.Identity |
+| [Data/ApplicationDbContext.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Data/ApplicationDbContext.cs) | Global using alias → Infrastructure.Persistence |
+
+## Quyết Định Kiến Trúc
+
+> [!IMPORTANT]
+> **Backward Compatibility Strategy**: Sử dụng `global using` aliases trong [Data/ApplicationUser.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Data/ApplicationUser.cs) và [Data/ApplicationDbContext.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Data/ApplicationDbContext.cs) để tất cả 28 file Account Identity pages tiếp tục hoạt động mà không cần sửa đổi. Code mới nên reference trực tiếp `Vns.Erp.Domain.Identity` và `Vns.Erp.Infrastructure.Persistence`.
+
+## Build Verification
+
+```
+Build succeeded.
+    14 Warning(s)  ← Pre-existing BL0008 warnings (SupplyParameterFromForm)
+    0 Error(s)
+Time Elapsed 00:00:19.67
+```
+
+## PostgreSQL + Docker Changes
+
+| File | Thay đổi |
+|---|---|
+| [Directory.Packages.props](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Directory.Packages.props) | SqlServer → Npgsql 10.0.0 |
+| [Infrastructure.csproj](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/Vns.Erp.Infrastructure.csproj) | Npgsql package |
+| [Web.csproj](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.csproj) | Npgsql package |
+| [DependencyInjection.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns.Erp.Infrastructure/DependencyInjection.cs) | `UseNpgsql()` |
+| [Program.cs](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Program.cs) | `UseNpgsql()` |
+| [appsettings.json](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/appsettings.json) | PostgreSQL connection string |
+| [docker-compose.yml](file:///C:/Users/Admin/source/Workspaces/2026/Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026/docker-compose.yml) | PostgreSQL 17 + pgAdmin 4 |
+
+## Khởi Động Docker
+
+```bash
+# Mở Docker Desktop trước, sau đó:
+cd Vns-Epr-Blazor-2026\Vns-Epr-Blazor-2026
+docker compose up -d
+
+# Tạo initial migration:
+dotnet ef migrations add InitialCreate --project Vns.Erp.Infrastructure --startup-project Vns-Epr-Blazor-2026
+dotnet ef database update --project Vns.Erp.Infrastructure --startup-project Vns-Epr-Blazor-2026
+```
+
+| Service | URL |
+|---|---|
+| PostgreSQL | `localhost:5432` (user: `vns_erp`, pass: `VnsErp@2026!`) |
+| pgAdmin | `localhost:5050` (email: `admin@vns.com.vn`, pass: `Admin@2026!`) |
+
+## Next Steps (Phase 2-4)
+- Xây dựng Domain entities cho module Inventory
+- Tạo Application Commands/Queries
+- Tích hợp EF Core Configurations
+- Setup CI/CD pipelines
+- Viết unit tests cho business logic

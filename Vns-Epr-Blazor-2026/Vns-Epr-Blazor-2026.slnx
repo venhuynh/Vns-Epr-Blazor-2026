@@ -1,0 +1,27 @@
+<Solution>
+  <!-- Web Host (Entry Point) -->
+  <Folder Name="/src/Web/">
+    <Project Path="Vns-Epr-Blazor-2026/Vns-Epr-Blazor-2026.csproj" />
+  </Folder>
+
+  <!-- Core Layers -->
+  <Folder Name="/src/Core/">
+    <Project Path="Vns.Erp.Domain/Vns.Erp.Domain.csproj" />
+    <Project Path="Vns.Erp.Application/Vns.Erp.Application.csproj" />
+  </Folder>
+
+  <!-- Infrastructure -->
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="Vns.Erp.Infrastructure/Vns.Erp.Infrastructure.csproj" />
+  </Folder>
+
+  <!-- Presentation -->
+  <Folder Name="/src/Presentation/">
+    <Project Path="Vns.Erp.Blazor.Shared/Vns.Erp.Blazor.Shared.csproj" />
+  </Folder>
+
+  <!-- Tests -->
+  <Folder Name="/tests/">
+    <Project Path="Vns.Erp.Tests.Unit/Vns.Erp.Tests.Unit.csproj" />
+  </Folder>
+</Solution>

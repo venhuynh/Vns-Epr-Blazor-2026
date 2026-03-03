@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  vns-erp-db:
+    image: postgres:17-alpine
+    container_name: vns-erp-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: vns_erp
+      POSTGRES_PASSWORD: VnsErp@2026!
+      POSTGRES_DB: VnsErpBlazor
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "5432:5432"
+    volumes:
+      - vns_erp_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vns_erp -d VnsErpBlazor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # pgAdmin (optional — database management UI)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: vns-erp-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@vns.com.vn
+      PGADMIN_DEFAULT_PASSWORD: Admin@2026!
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "5050:80"
+    depends_on:
+      vns-erp-db:
+        condition: service_healthy
+
+volumes:
+  vns_erp_pgdata:
+    driver: local

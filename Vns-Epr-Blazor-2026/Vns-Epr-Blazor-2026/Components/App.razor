@@ -1,0 +1,27 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    @DxResourceManager.RegisterTheme(ActiveTheme)
+    @DxResourceManager.RegisterScripts()
+    <link href="@Assets["css/site.css"]" rel="stylesheet" />
+    <link href="@Assets["Vns-Epr-Blazor-2026.styles.css"]" rel="stylesheet" />
+    <ImportMap />
+    <HeadOutlet />
+</head>
+<body>
+    <Routes />
+    <script src="@Assets["_framework/blazor.web.js"]"></script>
+</body>
+</html>
+
+@code {
+    static readonly ITheme ActiveTheme = Themes.Fluent.Clone(properties => {
+        properties.Mode = ThemeMode.Light;
+        properties.UseBootstrapStyles = true;
+    });
+
+}
