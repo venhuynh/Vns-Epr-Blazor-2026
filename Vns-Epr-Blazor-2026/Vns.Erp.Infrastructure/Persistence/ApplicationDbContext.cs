@@ -10,7 +10,7 @@ namespace Vns.Erp.Infrastructure.Persistence;
 /// Implements IApplicationDbContext from the Application layer.
 /// </summary>
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : IdentityDbContext<ApplicationUser>(options), IApplicationDbContext
+    : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options), IApplicationDbContext
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -18,9 +18,9 @@ We are migrating from a Monolith architecture to a Clean Architecture multi-proj
 - [x] 1.9. Fixed EditForm null Model runtime exception in Identity pages — added `Input ??= new();` in lifecycle methods before any `await` calls.
 
 ### Phase 2 — Identity & Security (Pending)
-- [ ] 2.1. Define ApplicationRole and extend ApplicationUser (if needed) in Domain.
-- [ ] 2.2. Configure Role-Based Access Control (RBAC) and Claims in Infrastructure.
-- [ ] 2.3. Create DbSeeders for default Admin user and base roles (e.g., SuperAdmin, WarehouseManager).
+- [x] 2.1. Define ApplicationRole and extend ApplicationUser (if needed) in Domain.
+- [x] 2.2. Configure Role-Based Access Control (RBAC) and Claims in Infrastructure.
+- [x] 2.3. Create DbSeeders for default Admin user and base roles (e.g., SuperAdmin, WarehouseManager).
 - [ ] 2.4. Finalize Blazor Identity UI and ensure AuthenticationStateProvider is fully functional.
 
 ### Phase 3 — Master Data Module (Pending)
@@ -34,6 +34,7 @@ We are migrating from a Monolith architecture to a Clean Architecture multi-proj
 - [ ] 4.3. Build DevExpress Blazor UI (DxGrid, DxFormLayout) for Stock Operations.
 
 - [x] 1.10. Created `docs/TROUBLESHOOTING.md` to document PostgreSQL port conflicts and authentication fixes.
+- [x] 1.11. Fixed Identity routing and sign-in by forcing Static SSR on Shared Account components.
 
 > **Note:** Updated roadmap to Identity → Master Data → Inventory per Solution Architect review (2026-03-03).
 

@@ -26,6 +26,7 @@ public static class DependencyInjection
             provider.GetRequiredService<ApplicationDbContext>());
 
         // Services
+        services.AddScoped<ApplicationDbContextInitialiser>();
         services.AddSingleton<IDateTimeService, DateTimeService>();
 
         return services;
