@@ -25,7 +25,7 @@ We are migrating from a Monolith architecture to a Clean Architecture multi-proj
 
 ### Phase 3 — Master Data Module (Pending)
 - [x] 3.1. Build Domain entities for Master Data. — Translated 18 legacy XPO classes into 16 pure C# entities + 3 enums in `Vns.Erp.Domain/MasterData/` (Company, CompanyBranch, Department, Employee, Position, BusinessPartner, BusinessPartnerCategory, BusinessPartnerContact, BusinessPartnerSite, ProductService, ProductServiceCategory, UnitOfMeasure, ProductAttribute, ProductAttributeValue, ProductVariant, VariantAttributeLink). Build: 0 errors.
-- [/] 3.2. Create Application layer MediatR Commands/Queries, DTOs, and Mapping Profiles. — Implemented initial CQRS patterns for Company and UnitOfMeasure (DTOs, AutoMapper profile, List queries, Create/Update commands with handlers). Added MediatR + AutoMapper packages. Extended `IApplicationDbContext` and `ApplicationDbContext` with all 16 Master Data DbSets. Full solution build: 0 errors.
+- [/] 3.2. Create Application layer MediatR Commands/Queries, DTOs, and Mapping Profiles. — Part 1: CQRS for Company + UnitOfMeasure. Part 2: Implemented CQRS for HR/Org entities (CompanyBranch, Department, Employee, Position). Total: 6 DTOs, 6 List queries, 12 Create/Update commands with handlers. Remaining: Partner + ProductService entities.
 - [ ] 3.3. Implement EF Core Configurations in the Infrastructure layer based on the relationships defined in the XAF project.
 - [ ] 3.4. Build DevExpress CRUD UIs (DxGrid) for Master Data management.
 
