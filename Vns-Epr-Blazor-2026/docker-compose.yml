@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # PostgreSQL Database
   vns-erp-db:
@@ -8,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: vns_erp
-      POSTGRES_PASSWORD: VnsErp@2026!
+      POSTGRES_PASSWORD: "VnsErp@2026!"
       POSTGRES_DB: VnsErpBlazor
       TZ: Asia/Ho_Chi_Minh
     ports:
@@ -16,7 +14,7 @@ services:
     volumes:
       - vns_erp_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U vns_erp -d VnsErpBlazor"]
+      test: [ "CMD-SHELL", "pg_isready -U vns_erp -d VnsErpBlazor" ]
       interval: 10s
       timeout: 5s
       retries: 5

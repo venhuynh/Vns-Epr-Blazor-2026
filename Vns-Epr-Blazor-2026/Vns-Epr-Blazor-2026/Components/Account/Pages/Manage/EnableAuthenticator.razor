@@ -81,6 +81,7 @@
     private InputModel Input { get; set; } = default!;
 
     protected override async Task OnInitializedAsync() {
+        Input ??= new();
         user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
         await LoadSharedKeyAndQrCodeUriAsync(user);

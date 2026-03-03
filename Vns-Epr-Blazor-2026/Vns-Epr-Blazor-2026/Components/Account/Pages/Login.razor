@@ -53,6 +53,15 @@
             <div class="dot"></div>
             <a href="@AddDrawerStateToUrl("Account/ForgotPassword")">Forgot your password?</a>
         </div>
+        @if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+        {
+            <div style="margin-top: 16px; padding: 12px; background: #1a1a2e; border: 1px solid #16213e; border-radius: 8px; font-size: 13px; color: #a0a0b0;">
+                <div style="font-weight: 600; color: #e94560; margin-bottom: 6px;">🔑 Dev Credentials</div>
+                <div><b>Email:</b> <code style="color: #0f3460;">admin@vns.com.vn</code></div>
+                <div><b>Password:</b> <code style="color: #0f3460;">Admin@2026!</code></div>
+                <div style="margin-top: 6px; font-size: 11px; color: #666;">⚠️ Register first via /Account/Register, then use these credentials.</div>
+            </div>
+        }
     </div>
 </div>
 
@@ -68,6 +77,8 @@
 
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
+
+    protected override void OnInitialized() => Input ??= new();
 
     public async Task LoginUser() {
         // This doesn't count login failures towards account lockout
