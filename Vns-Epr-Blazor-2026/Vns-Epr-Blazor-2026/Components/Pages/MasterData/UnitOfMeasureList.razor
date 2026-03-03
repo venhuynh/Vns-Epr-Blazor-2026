@@ -1,0 +1,159 @@
+@page "/master-data/units-of-measure"
+@rendermode InteractiveServer
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+@using MediatR
+@using Vns.Erp.Application.MasterData.DTOs
+@using Vns.Erp.Application.MasterData.Queries
+@using Vns.Erp.Application.MasterData.Commands
+
+@inject ISender Mediator
+
+<PageTitle>Units of Measure — VNS ERP</PageTitle>
+
+<h2 class="page-title">Units of Measure</h2>
+
+@* === Toolbar === *@
+<div class="mb-2">
+    <DxButton Text="New Unit" IconCssClass="icon icon-plus"
+              RenderStyle="ButtonRenderStyle.Primary"
+              Click="@OnNewClick" />
+</div>
+
+@* === Data Grid === *@
+<DxGrid Data="@units"
+        ShowFilterRow="true"
+        AllowSort="true"
+        PageSize="20"
+        CssClass="master-data-grid">
+    <Columns>
+        <DxGridDataColumn FieldName="UnitCode" Caption="Code" Width="150px" />
+        <DxGridDataColumn FieldName="UnitName" Caption="Name" />
+        <DxGridDataColumn FieldName="Description" Caption="Description" />
+        <DxGridDataColumn FieldName="IsActive" Caption="Active" Width="100px">
+            <CellDisplayTemplate>
+                @{
+                    var isActive = (bool)(context.Value ?? false);
+                    <span class="badge @(isActive ? "bg-success" : "bg-secondary")">
+                        @(isActive ? "Active" : "Inactive")
+                    </span>
+                }
+            </CellDisplayTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="CreatedDate" Caption="Created" Width="160px" DisplayFormat="dd/MM/yyyy HH:mm" />
+        <DxGridCommandColumn Width="100px" NewButtonVisible="false" EditButtonVisible="false" DeleteButtonVisible="false">
+            <CellDisplayTemplate>
+                <DxButton Text="Edit" RenderStyle="ButtonRenderStyle.Link"
+                          Click="@(() => OnEditClick((UnitOfMeasureDto)context.DataItem))" />
+            </CellDisplayTemplate>
+        </DxGridCommandColumn>
+    </Columns>
+</DxGrid>
+
+@* === Create/Edit Popup === *@
+<DxPopup @bind-Visible="@isPopupVisible"
+         HeaderText="@(isEditMode ? "Edit Unit of Measure" : "New Unit of Measure")"
+         Width="500px"
+         CloseOnOutsideClick="false"
+         ShowCloseButton="true">
+    <BodyTemplate Context="popupContext">
+        <DxFormLayout CssClass="p-2">
+            <DxFormLayoutItem Caption="Code" ColSpanMd="12">
+                <DxTextBox @bind-Value="@editModel.UnitCode"
+                           NullText="e.g. KG, PCS, SET"
+                           ReadOnly="@isEditMode" />
+            </DxFormLayoutItem>
+            <DxFormLayoutItem Caption="Name" ColSpanMd="12">
+                <DxTextBox @bind-Value="@editModel.UnitName"
+                           NullText="e.g. Kilogram, Pieces" />
+            </DxFormLayoutItem>
+            <DxFormLayoutItem Caption="Description" ColSpanMd="12">
+                <DxTextBox @bind-Value="@editModel.Description" />
+            </DxFormLayoutItem>
+            @if (isEditMode)
+            {
+                <DxFormLayoutItem Caption="Active" ColSpanMd="12">
+                    <DxCheckBox @bind-Checked="@editModel.IsActive" />
+                </DxFormLayoutItem>
+            }
+            <DxFormLayoutItem ColSpanMd="12">
+                <div class="d-flex gap-2 mt-2">
+                    <DxButton Text="Save" RenderStyle="ButtonRenderStyle.Primary"
+                              Click="@OnSaveClick" />
+                    <DxButton Text="Cancel" RenderStyle="ButtonRenderStyle.Secondary"
+                              Click="@OnCancelClick" />
+                </div>
+            </DxFormLayoutItem>
+        </DxFormLayout>
+    </BodyTemplate>
+</DxPopup>
+
+@code {
+    private List<UnitOfMeasureDto> units = new();
+    private UnitOfMeasureDto editModel = new();
+    private bool isPopupVisible;
+    private bool isEditMode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        units = await Mediator.Send(new GetUnitOfMeasureListQuery());
+    }
+
+    private void OnNewClick()
+    {
+        editModel = new UnitOfMeasureDto();
+        isEditMode = false;
+        isPopupVisible = true;
+    }
+
+    private void OnEditClick(UnitOfMeasureDto item)
+    {
+        editModel = new UnitOfMeasureDto
+        {
+            Id = item.Id,
+            UnitCode = item.UnitCode,
+            UnitName = item.UnitName,
+            Description = item.Description,
+            IsActive = item.IsActive
+        };
+        isEditMode = true;
+        isPopupVisible = true;
+    }
+
+    private async Task OnSaveClick()
+    {
+        if (isEditMode)
+        {
+            await Mediator.Send(new UpdateUnitOfMeasureCommand
+            {
+                Id = editModel.Id,
+                UnitCode = editModel.UnitCode,
+                UnitName = editModel.UnitName,
+                Description = editModel.Description,
+                IsActive = editModel.IsActive
+            });
+        }
+        else
+        {
+            await Mediator.Send(new CreateUnitOfMeasureCommand
+            {
+                UnitCode = editModel.UnitCode,
+                UnitName = editModel.UnitName,
+                Description = editModel.Description
+            });
+        }
+
+        isPopupVisible = false;
+        await LoadData();
+    }
+
+    private void OnCancelClick()
+    {
+        isPopupVisible = false;
+    }
+}

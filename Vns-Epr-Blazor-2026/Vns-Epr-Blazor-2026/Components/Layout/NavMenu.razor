@@ -47,6 +47,21 @@
         </Authorized>
     </AuthorizeView>
 
+    @* --- Master Data Navigation (Admin + SuperAdmin) --- *@
+    <AuthorizeView Roles="SuperAdmin, Admin">
+        <Authorized>
+            <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
+                <Items>
+                    <DxMenuItem Text="Master Data" IconCssClass="icon icon-data">
+                        <Items>
+                            <DxMenuItem NavigateUrl="/master-data/units-of-measure" Text="Units of Measure" CssClass="@MenuItemCssClass("/master-data/units-of-measure")"></DxMenuItem>
+                        </Items>
+                    </DxMenuItem>
+                </Items>
+            </DxMenu>
+        </Authorized>
+    </AuthorizeView>
+
     @* --- Account Settings (all authenticated) --- *@
     <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
         <Items>
